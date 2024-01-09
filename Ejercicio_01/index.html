@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menú del ejercicio 01</title>
+  <style>
+    body {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #contenedor {
+      text-align: center;
+      border: 2px solid #333;
+      border-radius: 15px;
+      padding: 20px;
+      width: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="contenedor">
+  <h2>Menú ejercicio 01</h2>
+  <button onclick="manejarOpcion('1')">1. FACTORIAL</button>
+  <br><br>
+  <button onclick="manejarOpcion('2')">2. PRIMO</button>
+  <br><br>
+  <button onclick="manejarOpcion('3')">3. SERIE MATEMÁTICA</button>
+  <br><br>
+  <button onclick="manejarOpcion('S')">S. SALIR</button>
+  <br>
+
+  <div id="resultado">
+    <!-- Aquí se mostrarán los resultados -->
+  </div>
+
+  <script>
+    function calcularFactorial(num) {
+      if (num == 0 || num == 1) {
+        return 1;
+      } else {
+        return num * calcularFactorial(num - 1);
+      }
+    }
+
+    function esPrimo(num) {
+      if (num < 2) {
+        return false;
+      }
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i == 0) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function calcularSerie(numTerminos) {
+      let resultado = 0;
+      for (let i = 1; i <= numTerminos; i++) {
+        let termino = Math.pow(i, 2) / calcularFactorial(i);
+        if (i % 2 == 0) {
+          resultado -= termino;
+        } else {
+          resultado += termino;
+        }
+      }
+      return resultado;
+    }
+
+    function manejarOpcion(opcion) {
+      switch (opcion) {
+        case '1':
+          let numFactorial = parseInt(prompt("Ingrese un número para calcular su factorial (Entre el 0 y el 10): "));
+          if (numFactorial >= 0 && numFactorial <= 10) {
+            document.getElementById('resultado').innerHTML = "<p id='resultadoFinal'>El factorial de " + numFactorial + " es: " + calcularFactorial(numFactorial) + "</p>";
+          } else {
+            document.getElementById('resultado').innerHTML = "Número fuera del rango permitido.";
+          }
+          break;
+
+        case '2':
+          let numPrimo = parseInt(prompt("Ingrese un número para verificar si es primo: "));
+          let resultadoPrimo = esPrimo(numPrimo) ? " es primo." : " no es primo.";
+          document.getElementById('resultado').innerHTML = "<p id='resultadoFinal'>" + numPrimo + resultadoPrimo + "</p>";
+          break;
+
+        case '3':
+          let numTerminos = parseInt(prompt("Ingrese la cantidad de términos para la serie matemática: "));
+          document.getElementById('resultado').innerHTML = "<p id='resultadoFinal'>El resultado de la serie es: " + calcularSerie(numTerminos) + "</p>";
+          break;
+
+        case 'S':
+          document.getElementById('resultado').innerHTML = "...";
+          // Esperar un segundo antes de redirigir
+          setTimeout(function() {
+            window.location.href = "../index.html";
+          }, 10);
+          break;
+      }
+    }
+  </script>
+</div>
+
+</body>
+</html>
